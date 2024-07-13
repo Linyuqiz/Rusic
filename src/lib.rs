@@ -6,26 +6,14 @@ use iced::{
     widget::{column, container, Button},
     Sandbox, Theme,
 };
-use message::audio::AudioTo;
-use message::pages::PageTo;
-use message::style::StyleTo;
-use message::theme::ThemeTo;
-use message::Message;
-mod message;
+use message::{audio::AudioTo, pages::PageTo, style::StyleTo, theme::ThemeTo, Message};
+use state::State;
 
-enum Audio {
-    Palying,
-    Stopping,
-    Pausing,
-}
-enum Page {
-    Main,
-    Settings,
-}
+mod message;
+mod state;
+
 pub struct Application {
-    audio: Audio,
-    page: Page,
-    // custom_style: CustomStyle,
+    state: state::State,
     theme: iced::Theme,
 }
 
@@ -56,8 +44,8 @@ pub struct Application {
 impl Sandbox for Application {
     type Message = message::Message;
     fn new() -> Self {
-        let audio = Audio::Pausing;
-        let page = Page::Main;
+        let state = State::default();
+
         // let custom_style = CustomStyle::Standard;
         let theme = iced::Theme::Moonfly;
         Self { audio, page, theme }
